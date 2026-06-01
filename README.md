@@ -56,6 +56,32 @@ dotnet test UnitConversion.sln --collect:"XPlat Code Coverage" -nologo
 3. Canonical unit ids returned in successful responses.
 4. RFC 7807 ProblemDetails for errors.
 
+## Design Decisions and Trade-offs
+
+1. Single affine conversion model
+  - Decision: use one formula for all supported categories (`base = value * factor + offset`).
+  - Trade-off: perfect for linear and affine scales, but non-linear domains would require a separate converter strategy.
+
+2. Registry abstraction for scalability
+  - Decision: keep unit data behind `IUnitRegistry` with an in-memory implementation for challenge speed.
+  - Trade-off: in-memory is fastest to deliver but not ideal for large operational datasets; swapping to JSON/DB is a planned evolution path.
+
+3. Explicit aliases instead of fuzzy matching
+  - Decision: support common typo and regional aliases as explicit mappings.
+  - Trade-off: deterministic behavior and low risk of false positives, but alias lists must be curated over time.
+
+4. Result-type error flow
+  - Decision: use service outcomes (`ConversionOutcome`) for expected business failures.
+  - Trade-off: clearer control flow and testability than exceptions, with slightly more mapping code in the controller.
+
+5. Precision strategy
+  - Decision: use `double` for conversion math and round finite outputs to 10 decimals in service.
+  - Trade-off: avoids noisy floating-point artifacts in API responses while retaining practical precision; raw scientific precision is intentionally not the API contract.
+
+6. Thin API layer
+  - Decision: keep controllers focused on HTTP and move business logic to infrastructure service/converter.
+  - Trade-off: more classes up front, but much easier testing and future replacement of internal components.
+
 ## Scope Notes
 
 This challenge version intentionally focuses on API design, conversion logic, and tests.
