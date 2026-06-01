@@ -1,0 +1,35 @@
+# Build output
+bin/
+obj/
+out/
+publish/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+
+# Rider
+_ReSharper*/
+*.DotSettings.user
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test
+TestResults/
+*.trx
+coverage.*.xml
+coverage.cobertura.xml
+
+# NuGet
+*.nupkg
+.nuget/
+packages/
+
+# Logs
+*.log
