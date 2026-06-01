@@ -85,4 +85,4 @@ dotnet test UnitConversion.sln --collect:"XPlat Code Coverage" -nologo
 ## Scope Notes
 
 This challenge version intentionally focuses on API design, conversion logic, and tests.
-Docker and CI/CD are future enhancements, not required challenge scope.
+Docker and CI/CD are future enhancements.
